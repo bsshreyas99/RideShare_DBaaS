@@ -14,7 +14,7 @@ Create three instances on AWS or any other cloud service with Ubuntu as the oper
 6. Run the rabbitmq container with the created image using the command `sudo docker run -p 5672:5672 rabbitmq_new`.
 7. Run the zookeeper container with the created image using the command `sudo docker run -p 2181:2181 zoo_new`.
 8. Finally run the orchestrator container by mounting the volume `/var/run/docker.sock`. Use the following command to achieve this:
-  `sudo docker run -it -p 80:8000 -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin:/usr/bin orc_new`. The read and      write APTs are exposed on port 80.
+  `sudo docker run -it -p 80:8000 -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin:/usr/bin orc_new`. The read and      write APIs are exposed on port 80.
 
 ### Instance 2 and 3:
 1. Bring up the **users** and **rides** containers by running their respective *.yml* files using the command `sudo docker-compose up --build`.
