@@ -1,0 +1,7 @@
+Flask
+requests
+pandas
+gunicorn
+kazoo
+pika
+docker

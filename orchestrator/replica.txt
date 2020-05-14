@@ -1,0 +1,5 @@
+INSERT INTO users (username, password) values ('a', 'd349Fd5bb3708e7508dc486bd2af0e2f2633b791');
+INSERT INTO rides (created_by, users, src, dest, ts) values ('a', 'a', '2', '3', '2020-03-20 11:32:32');
+INSERT INTO users (username, password) values ('b', 'd349Fd5bb3708e7508dc486bd2af0e2f2633b791');
+INSERT INTO rides (created_by, users, src, dest, ts) values ('b', 'b', '4', '3', '2020-03-20 11:32:32');
+INSERT INTO rides (created_by, users, src, dest, ts) values ('a', 'a', '4', '3', '2020-03-20 11:32:32');

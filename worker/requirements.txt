@@ -1,0 +1,6 @@
+mysql-connector-python==8.0.17
+requests
+pandas
+gunicorn
+pika
+kazoo
