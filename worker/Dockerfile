@@ -5,5 +5,5 @@ WORKDIR /app
 COPY requirements.txt /app
 RUN pip install -r requirements.txt
 
-COPY assignment1.py /app
-CMD ["python3","assignment1.py"]
+COPY worker.py /app
+CMD ["python3","worker.py"]
