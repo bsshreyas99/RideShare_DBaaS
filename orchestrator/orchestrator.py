@@ -143,7 +143,6 @@ def list_worker():
     return str(sorted(workers)),200
 
 
-
 #Spawn a new worker
 def respawn_slave():
     print("I am spawning a new worker")
