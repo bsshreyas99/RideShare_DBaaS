@@ -1,0 +1,383 @@
+(1) Read db
+Route: /api/v1/db/read
+HTTP Request Method: POST
+
+Request: {
+"column":["col_name"],
+"table":"table_name",
+"where":["condition"]
+}
+Response: The output for the sql query
+
+This API takes in a sql query in the form of a json, reads the database and returns the corresponding output.
+
+Example:
+
+Request: {
+"column":["username"],
+"table":"users",
+"where":["username='abc'"]
+}
+
+Response: abc
+Status code = 200
+
+If invalid sql query
+Staus code = 400
+
+
+(2) Write db
+Route: /api/v1/db/write
+HTTP Request Method: POST
+
+Request: {
+"insert":["col_value"],
+"column":["col_name"],
+"table":"table_name"
+}
+Response: {}
+
+This API takes in a sql query in the form of a json and writes it to the database.
+
+Example:
+
+Request: {
+"insert":["abc"],
+"column":["username"],
+"table":"users"
+}
+
+Response: {}
+Status code = 201
+
+
+(3) Clear db
+Route: /api/v1/db/clear
+HTTP Request Method: POST
+
+Request: {}
+Response: {}
+
+This API clears the database in its current state.
+
+Example:
+A call to /api/v1/_count with method=DELETE
+resets the counter 
+Status code = 200
+
+
+(4) Delete db
+Route: /api/v1/db/delop
+HTTP Request Method: POST
+
+Request: {
+"query": "query"
+}
+Response: {}
+
+This API clears the database in its current state.
+
+Example:
+
+Request: {
+"query":"DELETE from users WHERE username = abc"
+}
+
+Response: {}
+Status Code = 201
+
+
+(5) Crash slave
+Route: /api/v1/crash/slave
+HTTP Request Method: POST
+
+Request: {}
+Response: Process id of slave
+
+This API crashes the worker with the highest process id.
+
+Example:
+A call to the route /api/v1/crash/slave will crash one slave worker.
+Status Code = 200
+
+
+(6) Crash master
+Route: /api/v1/crash/master
+HTTP Request Method: POST
+
+Request: {}
+Response: Process id of slave
+
+This API crashes the master worker.
+
+Example:
+A call to the route /api/v1/crash/master will crash the master worker.
+Status Code = 200
+
+
+(7) List workers
+Route: /api/v1/worker/list
+HTTP Request Method: GET
+
+Request: {}
+Response: [ workers ]
+
+This API will list the process ids of all the current workers.
+
+Example:
+[12114, 13115]
+Status Code = 200
+
+
+(8) Add user
+Route: /api/v1/users
+HTTP Request Method: PUT
+
+Request: {
+“username”: “Username”,
+“password”: “password”
+}
+Response: {}
+
+The API creates a new user.
+The username should be unique and the password should be SHA1
+hash hex(length = 40 characters).
+
+Example:
+
+Request: {
+“username”: “abc”,
+“password”: “3d725109c7e7c0bfb9d709836735b56d943d263f”
+}
+Response: {}
+Status code = 201
+
+In case of already existing user or error in password return status code = 400
+
+
+(9) Remove user
+Route: /api/v1/users/{username}
+HTTP Request Method: DELETE
+
+Request: {}
+Response: {}
+
+The API call removes a user.
+The username in the route must exist for the call to succeed.
+
+Example:
+A call to the route /api/v1/users/abc will delete the existing user abc
+Status code = 200
+If the user does not exist return status code 400
+
+
+(10) List users 
+Route: /api/v1/users
+HTTP Request Method: GET
+
+Request: {}
+Response:
+[
+“username1”,
+“username2”,
+...
+]
+
+This API call list all the users present.
+
+Example:
+A call to /api/v1/users when there are users present  
+Response : [ "abc","xyz","mn"]
+Status code = 200
+
+If no users are present 
+Response = ""
+Status code = 204
+
+
+(11) Add rides
+Route: /api/v1/rides
+HTTP Request Method: POST
+
+​Request: {
+“created_by” : “{username}”,
+“timestamp“ : “DD-MM-YYYY:SS-MM-HH”,
+“source” : “{source}”,
+“destination” : “{destination}”
+}
+Response: {}
+
+This API is used to add a new ride from a given source to destination, into the existing rides database.
+The sorce and destination should be valid
+
+Example:
+
+Request: {
+"created_by":"abc",
+"timestamp":"10-03-2020:23-30-12",
+"source":"1",
+"destination":"2"
+}
+Response: {}
+Status code = 201
+
+In case of invalid source or destination return status code = 400
+
+
+(12) List rides 
+Route: /api/v1/rides
+HTTP Request Method: GET
+
+Request: {}
+Response: ​ [
+{
+“rideId“: 1234,
+“username“: “username”,
+“timestamp“: “DD-MM-YYYY:SS-MM-HH”
+},
+{
+...
+},
+]
+
+This API call list all the unique rides present in the database.
+
+Example:
+A call to /api/v1/users when there are users present  
+Response : [{“rideId“: 1234,“username“: “abc”,“timestamp“: “11-11-2019:00-00-00”}]
+Status code = 200
+
+If no rides are present 
+Response = []
+Status code = 204
+
+
+(13) List details of a ride
+Route: /api/v1/rides/<rideId>
+HTTP Request Method: GET
+
+Request: {}
+Response: ​ {
+“rideId” : “{rideId}”,
+“Created_by” : “{username}”,
+“users” : [“{username1}”, “{username1}”, ..],
+“Timestamp“ : “DD-MM-YYYY:SS-MM-HH”,
+“source” : “{source}”,
+“destination” : “{destination}”
+}
+
+This API lists all the details of a ride given the rideid.
+
+Example:
+Request: {}
+Response: ​ {
+“rideId” : “1”,
+“Created_by” : “abc”,
+“users” : [“def”, “ghi”],
+“Timestamp“ : “11-11-2019:00-00-00”,
+“source” : “1”,
+“destination” : “2”
+}
+Status code = 200
+
+If invalid rideid
+Status code = 400
+
+
+(14) Join a ride
+Route: /api/v1/rides/<rideId>
+HTTP Request Method: POST
+
+Request: {
+“Username” : “{username}”
+}
+Response: ​ {}
+
+This API allows a user to join an existing ride in the database.
+
+Example:
+Request: {
+“Username” : “abc”
+}
+Response: ​ {}
+Status code = 200
+
+If invalid rideid
+Status code = 400
+
+
+(15) Delete ride
+Route: /api/v1/rides/<rideId>
+HTTP Request Method: DELETE
+
+Request: {}
+Response: {}
+
+The API call deletes a ride.
+The rideid must exist for the call to succeed.
+
+Example:
+A call to the route /api/v1/rides/1 will delete the existing ride with rideid 1
+Status code = 200
+If the rideid is invalid status code 400
+
+
+(16) Count total number of rides
+Route: /api/v1/rides/count
+HTTP Request Method: GET
+
+Request: {}
+Response: [ count ] 
+
+This API call returns the total number of unique rides in the datbase.
+
+Example:
+A call to /api/v1/rides/count with method=GET
+Response = [ 126 ]
+Status code = 200
+
+
+(17) Count total HTTP requests made to microservice
+Route: /api/v1/_count
+HTTP Request Method: GET
+
+Request: {}
+Response: [ count ] 
+
+This API call returns the total number of HTTP requests made to this microservice.
+If no requests are made then returns 0.
+
+Example:
+A call to /api/v1/_count with method=GET
+Response = [ 134 ]
+Status code = 200
+
+
+(18) Increment HTTP requests count
+Route: /api/v1/incr_count_reqs
+HTTP Request Method: GET
+
+Request: {}
+Response: {} 
+
+This API call increments the total number of HTTP requests made to this microservice.
+
+Example:
+A call to /api/v1/incr_count_reqs with method=GET
+Response = {}
+Status code = 200
+
+
+(19) Reset HTTP requests counter
+Route: /api/v1/_count
+HTTP Request Method: DELETE
+
+Request: {}
+Response: {}
+
+The API resets the HTTP requests counter to 0 only for this microservice.
+
+Example:
+A call to /api/v1/_count with method=DELETE
+resets the counter 
+Status code = 200
