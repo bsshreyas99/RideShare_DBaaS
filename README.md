@@ -6,11 +6,11 @@ Create three instances on AWS or any other cloud service with Ubuntu as the oper
 * Copy the **users** folder to the third instance.
 
 ### Instance 1:
-1. Inside the orchestrator folder, run the command `sudo docker built -t orc_new ./` to create the orchestrator image.
-2. Inside the worker folder, run the command `sudo docker built -t app_new ./` to create the worker application image.
-3. Inside the database folder, run the command `sudo docker built -t mysql_new ./` to create the mysql database image.
-4. Inside the rabbitmq folder, run the command `sudo docker built -t rabbitmq_new ./` to create the rabbitmq image.
-5. Inside the zookeeper folder, run the command `sudo docker built -t zoo_new ./` to create the zookeeper image.
+1. Inside the orchestrator folder, run the command `sudo docker build -t orc_new ./` to create the orchestrator image.
+2. Inside the worker folder, run the command `sudo docker build -t app_new ./` to create the worker application image.
+3. Inside the database folder, run the command `sudo docker build -t mysql_new ./` to create the mysql database image.
+4. Inside the rabbitmq folder, run the command `sudo docker build -t rabbitmq_new ./` to create the rabbitmq image.
+5. Inside the zookeeper folder, run the command `sudo docker build -t zoo_new ./` to create the zookeeper image.
 6. Run the rabbitmq container with the created image using the command `sudo docker run -p 5672:5672 rabbitmq_new`.
 7. Run the zookeeper container with the created image using the command `sudo docker run -p 2181:2181 zoo_new`.
 8. Finally run the orchestrator container by mounting the volume `/var/run/docker.sock`. Use the following command to achieve this:
